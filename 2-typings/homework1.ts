@@ -1,8 +1,8 @@
 'use strict';
 
-import makeOrdinal from './makeOrdinal';
-import isFinite from './isFinite';
-import isSafeNumber from './isSafeNumber';
+import makeOrdinal from './makeOrdinal.js';
+import isFinite from './isFinite.js';
+import isSafeNumber from './isSafeNumber.js';
 
 const TEN = 10;
 const ONE_HUNDRED = 100;
@@ -13,14 +13,14 @@ const ONE_TRILLION = 1000000000000;
 const ONE_QUADRILLION = 1000000000000000; 
 const MAX = 9007199254740992;             
 
-const LESS_THAN_TWENTY: string[] = [
+const LESS_THAN_TWENTY = [
     'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
     'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'
-];
+] as const;
 
-const TENTHS_LESS_THAN_HUNDRED: string[] = [
+const TENTHS_LESS_THAN_HUNDRED = [
     'zero', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'
-];
+] as const;
 
 function toWords(number: number | string, asOrdinal?: boolean): string {
     let words: string = '';
@@ -37,7 +37,6 @@ function toWords(number: number | string, asOrdinal?: boolean): string {
     return asOrdinal ? makeOrdinal(words) : words;
 }
 
-// Делаем words опциональным параметром, чтобы вернуть смысл ветке if (!words)
 function generateWords(number: number, words?: string[]): string {
     let remainder: number = 0;
     let word: string = '';
@@ -62,7 +61,6 @@ function generateWords(number: number, words?: string[]): string {
         remainder = number % TEN;
         word = TENTHS_LESS_THAN_HUNDRED[Math.floor(number / TEN)] ?? '';
         if (remainder) {
-            // Добавлена защита ?? '' для консистентности
             word += '-' + (LESS_THAN_TWENTY[remainder] ?? '');
             remainder = 0;
         }
