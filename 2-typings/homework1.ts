@@ -8,10 +8,10 @@ const TEN = 10;
 const ONE_HUNDRED = 100;
 const ONE_THOUSAND = 1000;
 const ONE_MILLION = 1000000;
-const ONE_BILLION = 1000000000;           //         1.000.000.000 (9)
-const ONE_TRILLION = 1000000000000;       //     1.000.000.000.000 (12)
-const ONE_QUADRILLION = 1000000000000000; // 1.000.000.000.000.000 (15)
-const MAX = 9007199254740992;             // 9.007.199.254.740.992 (15)
+const ONE_BILLION = 1000000000;           
+const ONE_TRILLION = 1000000000000;       
+const ONE_QUADRILLION = 1000000000000000; 
+const MAX = 9007199254740992;             
 
 const LESS_THAN_TWENTY: string[] = [
     'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
@@ -49,8 +49,8 @@ function toWords(number: number | string, asOrdinal?: boolean): string {
 }
 
 function generateWords(number: number, words: string = ''): string {
-    let remainder: number;
-    let word: string;
+    let remainder: number = 0;
+    let word: string = '';
 
     // We’re done
     if (number === 0) {
@@ -73,7 +73,7 @@ function generateWords(number: number, words: string = ''): string {
     } else if (number < ONE_HUNDRED) {
         remainder = number % TEN;
         word = TENTHS_LESS_THAN_HUNDRED[Math.floor(number / TEN)] ?? '';
-        // In case of remainder, we need to handle it here to be able to add the “-”
+        
         if (remainder) {
             word += '-' + LESS_THAN_TWENTY[remainder];
             remainder = 0;
@@ -104,10 +104,9 @@ function generateWords(number: number, words: string = ''): string {
         word = generateWords(Math.floor(number / ONE_QUADRILLION)) +
         ' quadrillion,';
     }
+    
     words.push(word);
     return generateWords(remainder, words);
+} // <-- Я закрыл функцию здесь
 
-export default toWords;
-}   
-
-//
+export default toWords; // Экспорт теперь свободен!
